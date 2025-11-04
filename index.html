@@ -11,13 +11,28 @@
             --dark-blue: #1e40af;
             --light-blue: #3b82f6;
             --accent-blue: #60a5fa;
-            --text-light: #f8fafc;
-            --text-dark: #1e293b;
-            --bg-light: #f1f5f9;
-            --card-bg: #ffffff;
+            --background: #0f172a;
+            --surface: #1e293b;
+            --surface-light: #334155;
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --border: #475569;
             --success: #10b981;
             --warning: #f59e0b;
             --danger: #ef4444;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+        }
+
+        .light-theme {
+            --background: #f8fafc;
+            --surface: #ffffff;
+            --surface-light: #f1f5f9;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --border: #e2e8f0;
+            --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
 
         * {
@@ -25,12 +40,17 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
         }
 
         body {
-            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
-            color: var(--text-light);
+            background: var(--background);
+            color: var(--text-primary);
             min-height: 100vh;
+            line-height: 1.6;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(30, 58, 138, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(59, 130, 246, 0.1) 0%, transparent 20%);
         }
 
         .container {
@@ -39,29 +59,245 @@
             padding: 20px;
         }
 
-        /* Header Styles */
-        header {
-            text-align: center;
-            padding: 30px 0;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
+        /* Header with Profile */
+        .main-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
             margin-bottom: 30px;
-            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
         }
 
-        .logo {
-            font-size: 3rem;
-            margin-bottom: 10px;
+        .profile-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
         }
 
-        header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
+        .profile-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--light-blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            overflow: hidden;
+            position: relative;
         }
 
-        header p {
+        .profile-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .profile-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .profile-name {
+            font-weight: 600;
             font-size: 1.2rem;
-            opacity: 0.9;
+        }
+
+        .profile-balance {
+            color: var(--success);
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .app-title {
+            text-align: center;
+            flex: 1;
+        }
+
+        .app-title h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, var(--light-blue), var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 5px;
+        }
+
+        .app-title p {
+            color: var(--text-secondary);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 50%;
+            transition: background 0.3s;
+        }
+
+        .theme-toggle:hover {
+            background: var(--surface-light);
+        }
+
+        /* Profile Modal */
+        .profile-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .profile-modal.active {
+            display: flex;
+        }
+
+        .profile-content {
+            background: var(--surface);
+            border-radius: 15px;
+            padding: 30px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+        }
+
+        .profile-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .profile-header h2 {
+            color: var(--text-primary);
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .profile-image-section {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .profile-image-container {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: var(--surface-light);
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+            border: 3px solid var(--light-blue);
+        }
+
+        .profile-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .profile-image-placeholder {
+            font-size: 3rem;
+            color: var(--text-secondary);
+        }
+
+        .image-upload-btn {
+            background: var(--light-blue);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .image-upload-btn:hover {
+            background: var(--dark-blue);
+        }
+
+        .profile-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .form-group input {
+            padding: 12px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--surface-light);
+            color: var(--text-primary);
+        }
+
+        .theme-options {
+            display: flex;
+            gap: 10px;
+        }
+
+        .theme-option {
+            flex: 1;
+            padding: 15px;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .theme-option.active {
+            border-color: var(--light-blue);
+            background: var(--surface-light);
+        }
+
+        .theme-option i {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+
+        .save-profile-btn {
+            background: var(--success);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        .save-profile-btn:hover {
+            background: #0da271;
         }
 
         /* Dashboard Grid */
@@ -73,60 +309,85 @@
         }
 
         .dashboard-card {
-            background: var(--card-bg);
-            color: var(--text-dark);
-            border-radius: 15px;
-            padding: 25px;
+            background: var(--surface);
+            border-radius: 12px;
+            padding: 30px;
             text-align: center;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s, box-shadow 0.3s;
             cursor: pointer;
-            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dashboard-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--light-blue), var(--accent-blue));
         }
 
         .dashboard-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
-            border-color: var(--accent-blue);
+            box-shadow: var(--shadow-lg);
         }
 
         .card-icon {
             font-size: 3rem;
             margin-bottom: 15px;
-            color: var(--primary-blue);
+            color: var(--light-blue);
         }
 
         .dashboard-card h2 {
             margin-bottom: 10px;
-            color: var(--primary-blue);
+            color: var(--text-primary);
+            font-size: 1.4rem;
+        }
+
+        .dashboard-card p {
+            color: var(--text-secondary);
         }
 
         /* Module Sections */
         .module {
             display: none;
-            background: var(--card-bg);
-            color: var(--text-dark);
-            border-radius: 15px;
+            background: var(--surface);
+            border-radius: 12px;
             padding: 30px;
             margin-bottom: 30px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
         }
 
         .module.active {
             display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .module-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 25px;
-            padding-bottom: 15px;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
             border-bottom: 2px solid var(--light-blue);
         }
 
         .module-header h2 {
-            color: var(--primary-blue);
+            color: var(--text-primary);
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .back-btn {
@@ -144,6 +405,38 @@
             background: var(--dark-blue);
         }
 
+        /* Navigation Tabs */
+        .nav-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+            flex: 1;
+            min-width: 120px;
+            text-align: center;
+            color: var(--text-primary);
+        }
+
+        .tab-btn.active {
+            background: var(--light-blue);
+            color: white;
+            border-color: var(--light-blue);
+        }
+
+        .tab-btn:hover:not(.active) {
+            border-color: var(--light-blue);
+        }
+
         /* Form Styles */
         .form-grid {
             display: grid;
@@ -152,29 +445,28 @@
             margin-bottom: 30px;
         }
 
-        .form-group {
-            margin-bottom: 20px;
-        }
-
         label {
             display: block;
             margin-bottom: 8px;
             font-weight: 600;
-            color: var(--primary-blue);
+            color: var(--text-primary);
         }
 
         input, select, textarea {
             width: 100%;
             padding: 12px;
-            border: 2px solid #e2e8f0;
+            border: 1px solid var(--border);
             border-radius: 8px;
             font-size: 16px;
-            transition: border-color 0.3s;
+            transition: border 0.3s;
+            background: var(--surface-light);
+            color: var(--text-primary);
         }
 
         input:focus, select:focus, textarea:focus {
             outline: none;
             border-color: var(--light-blue);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
         }
 
         .btn {
@@ -193,66 +485,92 @@
             background: var(--dark-blue);
         }
 
-        .btn-danger {
-            background: var(--danger);
-        }
-
-        .btn-danger:hover {
-            background: #dc2626;
-        }
-
-        /* Data Display */
+        /* Enhanced Table Styles */
         .data-section {
             margin-top: 30px;
         }
 
-        .data-grid {
-            display: grid;
-            gap: 15px;
+        .section-title {
+            margin-bottom: 20px;
+            color: var(--text-primary);
+            font-size: 1.4rem;
         }
 
-        .data-card {
-            background: var(--bg-light);
-            padding: 20px;
-            border-radius: 10px;
-            border-left: 4px solid var(--light-blue);
+        .table-container {
+            background: var(--surface);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+            overflow-x: auto;
         }
 
-        .data-card.income {
-            border-left-color: var(--success);
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+            min-width: 600px;
         }
 
-        .data-card.expense {
-            border-left-color: var(--danger);
+        .data-table th {
+            background: var(--primary-blue);
+            color: white;
+            padding: 15px 12px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.9rem;
         }
 
-        .data-card.loan {
-            border-left-color: var(--warning);
+        .data-table td {
+            padding: 12px;
+            border-bottom: 1px solid var(--border);
         }
 
-        .data-header {
+        .data-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .data-table tr:hover {
+            background: var(--surface-light);
+        }
+
+        .amount-positive {
+            color: var(--success);
+            font-weight: 600;
+        }
+
+        .amount-negative {
+            color: var(--danger);
+            font-weight: 600;
+        }
+
+        .table-actions {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
-        .data-actions {
-            display: flex;
-            gap: 10px;
+            gap: 8px;
+            justify-content: center;
         }
 
         .action-btn {
             background: none;
             border: none;
             cursor: pointer;
-            font-size: 1.2rem;
-            color: var(--primary-blue);
-            transition: color 0.3s;
+            font-size: 1rem;
+            padding: 6px;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        .delete-btn {
+            color: var(--danger);
+        }
+
+        .edit-btn {
+            color: var(--warning);
         }
 
         .action-btn:hover {
-            color: var(--dark-blue);
+            background: var(--surface-light);
+            transform: scale(1.1);
         }
 
         /* Summary Cards */
@@ -264,20 +582,23 @@
         }
 
         .summary-card {
-            background: var(--bg-light);
-            padding: 20px;
-            border-radius: 10px;
+            background: var(--surface);
+            padding: 25px;
+            border-radius: 12px;
             text-align: center;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
         }
 
         .summary-card h3 {
-            margin-bottom: 10px;
-            color: var(--primary-blue);
+            margin-bottom: 15px;
+            color: var(--text-secondary);
+            font-size: 1rem;
         }
 
         .summary-amount {
-            font-size: 1.8rem;
-            font-weight: bold;
+            font-size: 2rem;
+            font-weight: 700;
         }
 
         .income-amount {
@@ -292,63 +613,151 @@
             color: var(--light-blue);
         }
 
-        /* Food Menu */
-        .menu-grid {
+        /* Schedule Styles */
+        .schedule-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             gap: 20px;
         }
 
-        .menu-item {
-            background: var(--bg-light);
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .menu-item img {
-            width: 100%;
-            height: 150px;
-            object-fit: cover;
-        }
-
-        .menu-info {
-            padding: 15px;
-        }
-
-        .menu-price {
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: var(--success);
-            margin-top: 10px;
-        }
-
-        /* Schedule */
-        .schedule-day {
-            margin-bottom: 30px;
+        .day-schedule {
+            background: var(--surface);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: var(--shadow);
         }
 
         .day-header {
             background: var(--light-blue);
             color: white;
             padding: 15px;
-            border-radius: 10px 10px 0 0;
-            margin-bottom: 10px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-weight: 600;
         }
 
         .schedule-item {
-            background: var(--bg-light);
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 10px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .schedule-item:last-child {
+            border-bottom: none;
         }
 
         .schedule-time {
-            font-weight: bold;
-            color: var(--primary-blue);
+            font-weight: 600;
+            color: var(--light-blue);
+            min-width: 80px;
+        }
+
+        /* Edit Modal */
+        .edit-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .edit-modal.active {
+            display: flex;
+        }
+
+        .edit-content {
+            background: var(--surface);
+            border-radius: 15px;
+            padding: 30px;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .edit-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .edit-header h2 {
+            color: var(--text-primary);
+        }
+
+        /* Notification System */
+        .notification-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            max-width: 400px;
+        }
+
+        .notification {
+            background: var(--surface);
+            border-left: 4px solid var(--light-blue);
+            padding: 15px 20px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            animation: slideInRight 0.3s ease;
+        }
+
+        .notification.warning {
+            border-left-color: var(--warning);
+        }
+
+        .notification.danger {
+            border-left-color: var(--danger);
+        }
+
+        .notification.success {
+            border-left-color: var(--success);
+        }
+
+        .notification-icon {
+            font-size: 1.5rem;
+        }
+
+        .notification-content {
+            flex: 1;
+        }
+
+        .notification-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .notification-close {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
         }
 
         /* Responsive Design */
@@ -365,8 +774,56 @@
                 grid-template-columns: repeat(2, 1fr);
             }
             
-            header h1 {
-                font-size: 2rem;
+            .nav-tabs {
+                flex-direction: column;
+            }
+            
+            .tab-btn {
+                min-width: auto;
+            }
+            
+            .module-header {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+            
+            .data-table {
+                font-size: 12px;
+            }
+            
+            .data-table th,
+            .data-table td {
+                padding: 10px 8px;
+            }
+
+            .main-header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            .profile-section {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .module {
+                padding: 20px;
+            }
+            
+            .dashboard-card {
+                padding: 20px;
+            }
+            
+            .table-actions {
+                flex-direction: column;
+                gap: 5px;
             }
         }
 
@@ -386,15 +843,114 @@
         .mb-20 {
             margin-bottom: 20px;
         }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .badge-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .badge-warning {
+            background: var(--warning);
+            color: white;
+        }
+
+        .badge-danger {
+            background: var(--danger);
+            color: white;
+        }
     </style>
 </head>
-<body>
+<body class="dark-theme">
+    <!-- Profile Modal -->
+    <div class="profile-modal" id="profileModal">
+        <div class="profile-content">
+            <div class="profile-header">
+                <h2>Profile Settings</h2>
+                <button class="close-modal" id="closeProfileModal">&times;</button>
+            </div>
+            
+            <div class="profile-image-section">
+                <div class="profile-image-container" id="profileImageContainer">
+                    <div class="profile-image-placeholder">
+                        <i class="fas fa-user"></i>
+                    </div>
+                </div>
+                <input type="file" id="imageUpload" accept="image/*" style="display: none;">
+                <button class="image-upload-btn" id="uploadImageBtn">Upload Image</button>
+            </div>
+            
+            <form class="profile-form" id="profileForm">
+                <div class="form-group">
+                    <label for="userName">Your Name</label>
+                    <input type="text" id="userName" placeholder="Enter your name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Theme Preference</label>
+                    <div class="theme-options">
+                        <div class="theme-option active" data-theme="dark">
+                            <i class="fas fa-moon"></i>
+                            <div>Dark</div>
+                        </div>
+                        <div class="theme-option" data-theme="light">
+                            <i class="fas fa-sun"></i>
+                            <div>Light</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <button type="submit" class="save-profile-btn">Save Changes</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Edit Modal -->
+    <div class="edit-modal" id="editModal">
+        <div class="edit-content">
+            <div class="edit-header">
+                <h2 id="editModalTitle">Edit Item</h2>
+                <button class="close-modal" id="closeEditModal">&times;</button>
+            </div>
+            <form id="editForm">
+                <!-- Form content will be dynamically populated -->
+            </form>
+        </div>
+    </div>
+
+    <!-- Notification Container -->
+    <div class="notification-container" id="notificationContainer"></div>
+
     <div class="container">
-        <!-- Welcome Dashboard -->
-        <header id="welcome-header">
-            <div class="logo">Σ_R</div>
-            <h1>Hello, Sigma-Ruler!</h1>
-            <p>Your Personal Hostel Management System</p>
+        <!-- Header with Profile -->
+        <header class="main-header">
+            <div class="profile-section">
+                <div class="profile-icon" id="profileIcon">
+                    <div class="profile-image-placeholder">
+                        <i class="fas fa-user"></i>
+                    </div>
+                </div>
+                <div class="profile-info">
+                    <div class="profile-name" id="profileName">Sigma Ruler</div>
+                    <div class="profile-balance" id="profileBalance">Rs. 0.00</div>
+                </div>
+            </div>
+            
+            <div class="app-title">
+                <h1>Hostel Manager</h1>
+                <p>Your All-in-One Hostel Management Solution</p>
+            </div>
+            
+            <button class="theme-toggle" id="themeToggle">
+                <i class="fas fa-moon"></i>
+            </button>
         </header>
 
         <!-- Main Dashboard -->
@@ -432,20 +988,20 @@
             </div>
 
             <!-- Finance Navigation -->
-            <div class="form-grid">
-                <button class="btn" data-finance-tab="pocket-money">Pocket Money</button>
-                <button class="btn" data-finance-tab="expenses">Expenses</button>
-                <button class="btn" data-finance-tab="loans">Loans</button>
-                <button class="btn" data-finance-tab="summary">Summary</button>
+            <div class="nav-tabs">
+                <button class="tab-btn active" data-tab="pocket-money">Pocket Money</button>
+                <button class="tab-btn" data-tab="expenses">Expenses</button>
+                <button class="tab-btn" data-tab="loans">Loans</button>
+                <button class="tab-btn" data-tab="summary">Summary</button>
             </div>
 
-            <!-- Pocket Money Form -->
-            <div class="finance-section" id="pocket-money-section">
-                <h3>Add Pocket Money</h3>
+            <!-- Pocket Money Section -->
+            <div class="tab-content active" id="pocket-money-tab">
+                <h3 class="section-title">Add Pocket Money</h3>
                 <form id="pocket-money-form">
                     <div class="form-grid">
                         <div class="form-group">
-                            <label for="pocket-amount">Amount</label>
+                            <label for="pocket-amount">Amount (Rs.)</label>
                             <input type="number" id="pocket-amount" step="0.01" required>
                         </div>
                         <div class="form-group">
@@ -454,27 +1010,39 @@
                         </div>
                         <div class="form-group">
                             <label for="pocket-source">Source</label>
-                            <input type="text" id="pocket-source" required>
+                            <input type="text" id="pocket-source" placeholder="e.g., Parents, Part-time job" required>
                         </div>
                     </div>
                     <button type="submit" class="btn">Add Pocket Money</button>
                 </form>
 
                 <div class="data-section">
-                    <h3>Pocket Money History</h3>
-                    <div class="data-grid" id="pocket-money-list">
-                        <!-- Pocket money entries will appear here -->
+                    <h3 class="section-title">Pocket Money History</h3>
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Source</th>
+                                    <th>Amount</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="pocket-money-table">
+                                <!-- Table rows will be added here -->
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
 
-            <!-- Expenses Form -->
-            <div class="finance-section hidden" id="expenses-section">
-                <h3>Add Expense</h3>
+            <!-- Expenses Section -->
+            <div class="tab-content hidden" id="expenses-tab">
+                <h3 class="section-title">Add Expense</h3>
                 <form id="expense-form">
                     <div class="form-grid">
                         <div class="form-group">
-                            <label for="expense-amount">Amount</label>
+                            <label for="expense-amount">Amount (Rs.)</label>
                             <input type="number" id="expense-amount" step="0.01" required>
                         </div>
                         <div class="form-group">
@@ -493,27 +1061,40 @@
                         </div>
                         <div class="form-group">
                             <label for="expense-description">Description</label>
-                            <input type="text" id="expense-description" required>
+                            <input type="text" id="expense-description" placeholder="What did you spend on?" required>
                         </div>
                     </div>
                     <button type="submit" class="btn">Add Expense</button>
                 </form>
 
                 <div class="data-section">
-                    <h3>Expense History</h3>
-                    <div class="data-grid" id="expenses-list">
-                        <!-- Expense entries will appear here -->
+                    <h3 class="section-title">Expense History</h3>
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Description</th>
+                                    <th>Category</th>
+                                    <th>Amount</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="expenses-table">
+                                <!-- Table rows will be added here -->
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
 
-            <!-- Loans Form -->
-            <div class="finance-section hidden" id="loans-section">
-                <h3>Add Loan</h3>
+            <!-- Loans Section -->
+            <div class="tab-content hidden" id="loans-tab">
+                <h3 class="section-title">Add Loan</h3>
                 <form id="loan-form">
                     <div class="form-grid">
                         <div class="form-group">
-                            <label for="loan-amount">Amount</label>
+                            <label for="loan-amount">Amount (Rs.)</label>
                             <input type="number" id="loan-amount" step="0.01" required>
                         </div>
                         <div class="form-group">
@@ -525,7 +1106,7 @@
                         </div>
                         <div class="form-group">
                             <label for="loan-person">Person</label>
-                            <input type="text" id="loan-person" required>
+                            <input type="text" id="loan-person" placeholder="Person's name" required>
                         </div>
                         <div class="form-group">
                             <label for="loan-date">Date</label>
@@ -540,28 +1121,43 @@
                 </form>
 
                 <div class="data-section">
-                    <h3>Loan History</h3>
-                    <div class="data-grid" id="loans-list">
-                        <!-- Loan entries will appear here -->
+                    <h3 class="section-title">Loan History</h3>
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Person</th>
+                                    <th>Type</th>
+                                    <th>Amount</th>
+                                    <th>Return Date</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="loans-table">
+                                <!-- Table rows will be added here -->
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
 
             <!-- Finance Summary -->
-            <div class="finance-section hidden" id="summary-section">
-                <h3>Financial Summary</h3>
+            <div class="tab-content hidden" id="summary-tab">
+                <h3 class="section-title">Financial Summary</h3>
                 <div class="summary-cards">
                     <div class="summary-card">
                         <h3>Total Pocket Money</h3>
-                        <div class="summary-amount income-amount" id="total-pocket-money">$0.00</div>
+                        <div class="summary-amount income-amount" id="total-pocket-money">Rs. 0.00</div>
                     </div>
                     <div class="summary-card">
                         <h3>Total Expenses</h3>
-                        <div class="summary-amount expense-amount" id="total-expenses">$0.00</div>
+                        <div class="summary-amount expense-amount" id="total-expenses">Rs. 0.00</div>
                     </div>
                     <div class="summary-card">
                         <h3>Current Balance</h3>
-                        <div class="summary-amount balance-amount" id="current-balance">$0.00</div>
+                        <div class="summary-amount balance-amount" id="current-balance">Rs. 0.00</div>
                     </div>
                     <div class="summary-card">
                         <h3>Active Loans</h3>
@@ -578,20 +1174,35 @@
                 <button class="back-btn">Back to Dashboard</button>
             </div>
 
-            <div class="menu-grid" id="food-menu">
-                <!-- Food items will be added here -->
+            <div class="data-section">
+                <h3 class="section-title">Food Menu</h3>
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Item Name</th>
+                                <th>Category</th>
+                                <th>Price (Rs.)</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="food-menu-table">
+                            <!-- Table rows will be added here -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
             <div class="mt-20">
-                <h3>Add New Food Item</h3>
+                <h3 class="section-title">Add New Food Item</h3>
                 <form id="food-form">
                     <div class="form-grid">
                         <div class="form-group">
                             <label for="food-name">Food Name</label>
-                            <input type="text" id="food-name" required>
+                            <input type="text" id="food-name" placeholder="e.g., Chicken Biryani" required>
                         </div>
                         <div class="form-group">
-                            <label for="food-price">Price</label>
+                            <label for="food-price">Price (Rs.)</label>
                             <input type="number" id="food-price" step="0.01" required>
                         </div>
                         <div class="form-group">
@@ -618,20 +1229,20 @@
             </div>
 
             <!-- Study Navigation -->
-            <div class="form-grid">
-                <button class="btn" data-study-tab="classes">Classes</button>
-                <button class="btn" data-study-tab="assignments">Assignments</button>
-                <button class="btn" data-study-tab="exams">Exams</button>
+            <div class="nav-tabs">
+                <button class="tab-btn active" data-tab="classes">Classes</button>
+                <button class="tab-btn" data-tab="assignments">Assignments</button>
+                <button class="tab-btn" data-tab="exams">Exams</button>
             </div>
 
             <!-- Classes Section -->
-            <div class="study-section" id="classes-section">
-                <h3>Class Schedule</h3>
+            <div class="tab-content active" id="classes-tab">
+                <h3 class="section-title">Add Class</h3>
                 <form id="class-form">
                     <div class="form-grid">
                         <div class="form-group">
                             <label for="class-name">Class Name</label>
-                            <input type="text" id="class-name" required>
+                            <input type="text" id="class-name" placeholder="e.g., Data Structures" required>
                         </div>
                         <div class="form-group">
                             <label for="class-day">Day</label>
@@ -651,79 +1262,108 @@
                         </div>
                         <div class="form-group">
                             <label for="class-location">Location</label>
-                            <input type="text" id="class-location" required>
+                            <input type="text" id="class-location" placeholder="e.g., CS-101" required>
                         </div>
                     </div>
                     <button type="submit" class="btn">Add Class</button>
                 </form>
 
                 <div class="data-section">
-                    <div id="classes-schedule">
+                    <h3 class="section-title">Class Schedule</h3>
+                    <div class="schedule-grid" id="classes-schedule">
                         <!-- Classes will be organized by day -->
                     </div>
                 </div>
             </div>
 
             <!-- Assignments Section -->
-            <div class="study-section hidden" id="assignments-section">
-                <h3>Assignments</h3>
+            <div class="tab-content hidden" id="assignments-tab">
+                <h3 class="section-title">Add Assignment</h3>
                 <form id="assignment-form">
                     <div class="form-grid">
                         <div class="form-group">
                             <label for="assignment-title">Title</label>
-                            <input type="text" id="assignment-title" required>
+                            <input type="text" id="assignment-title" placeholder="Assignment title" required>
                         </div>
                         <div class="form-group">
                             <label for="assignment-subject">Subject</label>
-                            <input type="text" id="assignment-subject" required>
+                            <input type="text" id="assignment-subject" placeholder="e.g., Computer Science" required>
                         </div>
                         <div class="form-group">
                             <label for="assignment-deadline">Deadline</label>
                             <input type="datetime-local" id="assignment-deadline" required>
                         </div>
                         <div class="form-group">
-                            <label for="assignment-topic">Topic</label>
-                            <textarea id="assignment-topic" required></textarea>
+                            <label for="assignment-topic">Topic/Description</label>
+                            <textarea id="assignment-topic" rows="3" placeholder="Brief description of the assignment" required></textarea>
                         </div>
                     </div>
                     <button type="submit" class="btn">Add Assignment</button>
                 </form>
 
                 <div class="data-section">
-                    <div class="data-grid" id="assignments-list">
-                        <!-- Assignments will appear here -->
+                    <h3 class="section-title">Assignments</h3>
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Subject</th>
+                                    <th>Deadline</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="assignments-table">
+                                <!-- Table rows will be added here -->
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
 
             <!-- Exams Section -->
-            <div class="study-section hidden" id="exams-section">
-                <h3>Exams</h3>
+            <div class="tab-content hidden" id="exams-tab">
+                <h3 class="section-title">Add Exam</h3>
                 <form id="exam-form">
                     <div class="form-grid">
                         <div class="form-group">
                             <label for="exam-subject">Subject</label>
-                            <input type="text" id="exam-subject" required>
+                            <input type="text" id="exam-subject" placeholder="e.g., Mathematics" required>
                         </div>
                         <div class="form-group">
-                            <label for="exam-date">Date</label>
+                            <label for="exam-date">Date & Time</label>
                             <input type="datetime-local" id="exam-date" required>
                         </div>
                         <div class="form-group">
                             <label for="exam-location">Location</label>
-                            <input type="text" id="exam-location" required>
+                            <input type="text" id="exam-location" placeholder="e.g., Exam Hall A" required>
                         </div>
                         <div class="form-group">
-                            <label for="exam-topics">Topics</label>
-                            <textarea id="exam-topics" required></textarea>
+                            <label for="exam-topics">Topics to Study</label>
+                            <textarea id="exam-topics" rows="3" placeholder="List important topics" required></textarea>
                         </div>
                     </div>
                     <button type="submit" class="btn">Add Exam</button>
                 </form>
 
                 <div class="data-section">
-                    <div class="data-grid" id="exams-list">
-                        <!-- Exams will appear here -->
+                    <h3 class="section-title">Exams Schedule</h3>
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Subject</th>
+                                    <th>Date & Time</th>
+                                    <th>Location</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="exams-table">
+                                <!-- Table rows will be added here -->
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -733,6 +1373,11 @@
     <script>
         // Data structure
         let appData = {
+            profile: {
+                name: "Sigma Ruler",
+                image: null,
+                theme: "dark"
+            },
             pocketMoney: [],
             expenses: [],
             loans: [],
@@ -742,16 +1387,113 @@
             exams: []
         };
 
+        // Current item being edited
+        let currentEditItem = null;
+        let currentEditType = null;
+
+        // Notification system
+        function showNotification(title, message, type = 'info') {
+            const notificationContainer = document.getElementById('notificationContainer');
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.innerHTML = `
+                <div class="notification-icon">
+                    <i class="fas fa-${type === 'warning' ? 'exclamation-triangle' : type === 'danger' ? 'exclamation-circle' : type === 'success' ? 'check-circle' : 'info-circle'}"></i>
+                </div>
+                <div class="notification-content">
+                    <div class="notification-title">${title}</div>
+                    <div class="notification-message">${message}</div>
+                </div>
+                <button class="notification-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+            
+            notificationContainer.appendChild(notification);
+            
+            // Auto remove after 5 seconds
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.style.animation = 'slideInRight 0.3s ease reverse';
+                    setTimeout(() => notification.remove(), 300);
+                }
+            }, 5000);
+            
+            // Close button
+            notification.querySelector('.notification-close').addEventListener('click', () => {
+                notification.style.animation = 'slideInRight 0.3s ease reverse';
+                setTimeout(() => notification.remove(), 300);
+            });
+        }
+
+        // Check for upcoming deadlines and classes
+        function checkNotifications() {
+            const now = new Date();
+            
+            // Check assignments
+            appData.assignments.forEach(assignment => {
+                const deadline = new Date(assignment.deadline);
+                const timeDiff = deadline - now;
+                const hoursDiff = timeDiff / (1000 * 60 * 60);
+                
+                if (hoursDiff > 0 && hoursDiff <= 24) {
+                    showNotification(
+                        'Assignment Due Soon!',
+                        `${assignment.title} is due in ${Math.ceil(hoursDiff)} hours`,
+                        'warning'
+                    );
+                }
+            });
+            
+            // Check exams
+            appData.exams.forEach(exam => {
+                const examDate = new Date(exam.date);
+                const timeDiff = examDate - now;
+                const daysDiff = timeDiff / (1000 * 60 * 60 * 24);
+                
+                if (daysDiff > 0 && daysDiff <= 7) {
+                    showNotification(
+                        'Upcoming Exam!',
+                        `${exam.subject} exam in ${Math.ceil(daysDiff)} days`,
+                        'danger'
+                    );
+                }
+            });
+            
+            // Check classes for today
+            const today = now.toLocaleDateString('en-US', { weekday: 'long' }).toLowerCase();
+            const currentTime = now.toTimeString().substring(0, 5);
+            
+            appData.classes.forEach(cls => {
+                if (cls.day === today) {
+                    const classTime = cls.time;
+                    // Simple time comparison - in real app, you'd want more sophisticated logic
+                    if (classTime === currentTime) {
+                        showNotification(
+                            'Class Starting!',
+                            `${cls.name} is starting now at ${cls.location}`,
+                            'info'
+                        );
+                    }
+                }
+            });
+        }
+
         // Load data from localStorage
         function loadData() {
             const savedData = localStorage.getItem('sigmaRulerData');
             if (savedData) {
                 appData = JSON.parse(savedData);
             } else {
-                // Initialize with sample data
                 initializeSampleData();
             }
+            updateProfileDisplay();
             updateAllDisplays();
+            
+            // Check for notifications every minute
+            setInterval(checkNotifications, 60000);
+            // Initial check
+            setTimeout(checkNotifications, 2000);
         }
 
         // Initialize with sample data
@@ -770,6 +1512,19 @@
                 { id: 3, name: "Web Development", day: "wednesday", time: "14:00", location: "Lab-3" }
             ];
 
+            // Add sample assignment with near deadline for testing notifications
+            const tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            appData.assignments = [
+                { 
+                    id: 1, 
+                    title: "Web Development Project", 
+                    subject: "Computer Science", 
+                    deadline: tomorrow.toISOString().slice(0, 16),
+                    topic: "Build a responsive website using HTML, CSS, and JavaScript"
+                }
+            ];
+
             saveData();
         }
 
@@ -777,6 +1532,98 @@
         function saveData() {
             localStorage.setItem('sigmaRulerData', JSON.stringify(appData));
         }
+
+        // Update profile display
+        function updateProfileDisplay() {
+            document.getElementById('profileName').textContent = appData.profile.name;
+            
+            // Update profile image
+            const profileIcon = document.getElementById('profileIcon');
+            const profileImageContainer = document.getElementById('profileImageContainer');
+            
+            if (appData.profile.image) {
+                profileIcon.innerHTML = `<img src="${appData.profile.image}" alt="Profile">`;
+                profileImageContainer.innerHTML = `<img src="${appData.profile.image}" alt="Profile">`;
+            } else {
+                profileIcon.innerHTML = '<div class="profile-image-placeholder"><i class="fas fa-user"></i></div>';
+                profileImageContainer.innerHTML = '<div class="profile-image-placeholder"><i class="fas fa-user"></i></div>';
+            }
+            
+            // Update balance
+            updateBalanceDisplay();
+            
+            // Update theme
+            document.body.className = `${appData.profile.theme}-theme`;
+            document.getElementById('themeToggle').innerHTML = appData.profile.theme === 'dark' ? 
+                '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+                
+            // Update theme options
+            document.querySelectorAll('.theme-option').forEach(option => {
+                option.classList.remove('active');
+                if (option.getAttribute('data-theme') === appData.profile.theme) {
+                    option.classList.add('active');
+                }
+            });
+        }
+
+        // Update balance display
+        function updateBalanceDisplay() {
+            const totalPocketMoney = appData.pocketMoney.reduce((sum, item) => sum + item.amount, 0);
+            const totalExpenses = appData.expenses.reduce((sum, item) => sum + item.amount, 0);
+            const currentBalance = totalPocketMoney - totalExpenses;
+            
+            document.getElementById('profileBalance').textContent = `Rs. ${currentBalance.toFixed(2)}`;
+        }
+
+        // Profile management
+        document.getElementById('profileIcon').addEventListener('click', () => {
+            document.getElementById('profileModal').classList.add('active');
+            document.getElementById('userName').value = appData.profile.name;
+        });
+
+        document.getElementById('closeProfileModal').addEventListener('click', () => {
+            document.getElementById('profileModal').classList.remove('active');
+        });
+
+        document.getElementById('uploadImageBtn').addEventListener('click', () => {
+            document.getElementById('imageUpload').click();
+        });
+
+        document.getElementById('imageUpload').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    appData.profile.image = event.target.result;
+                    updateProfileDisplay();
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        document.querySelectorAll('.theme-option').forEach(option => {
+            option.addEventListener('click', function() {
+                appData.profile.theme = this.getAttribute('data-theme');
+                updateProfileDisplay();
+                saveData();
+            });
+        });
+
+        document.getElementById('profileForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            appData.profile.name = document.getElementById('userName').value;
+            updateProfileDisplay();
+            saveData();
+            document.getElementById('profileModal').classList.remove('active');
+            showNotification('Profile Updated', 'Your profile has been updated successfully', 'success');
+        });
+
+        // Theme toggle
+        document.getElementById('themeToggle').addEventListener('click', function() {
+            appData.profile.theme = appData.profile.theme === 'dark' ? 'light' : 'dark';
+            updateProfileDisplay();
+            saveData();
+        });
 
         // Navigation between modules
         document.querySelectorAll('.dashboard-card').forEach(card => {
@@ -807,37 +1654,289 @@
             document.getElementById(`${moduleName}-module`).classList.add('active');
         }
 
-        // Finance Module Navigation
-        document.querySelectorAll('[data-finance-tab]').forEach(btn => {
+        // Tab navigation
+        document.querySelectorAll('.tab-btn').forEach(btn => {
             btn.addEventListener('click', function() {
-                const tab = this.getAttribute('data-finance-tab');
-                showFinanceTab(tab);
+                const tabContainer = this.closest('.module').querySelector('.nav-tabs');
+                const tabContents = this.closest('.module').querySelectorAll('.tab-content');
+                
+                // Update active tab button
+                tabContainer.querySelectorAll('.tab-btn').forEach(tab => {
+                    tab.classList.remove('active');
+                });
+                this.classList.add('active');
+                
+                // Show active tab content
+                const tabId = this.getAttribute('data-tab');
+                tabContents.forEach(content => {
+                    content.classList.add('hidden');
+                });
+                document.getElementById(`${tabId}-tab`).classList.remove('hidden');
             });
         });
 
-        function showFinanceTab(tabName) {
-            document.querySelectorAll('.finance-section').forEach(section => {
-                section.classList.add('hidden');
-            });
-            document.getElementById(`${tabName}-section`).classList.remove('hidden');
-        }
-
-        // Study Module Navigation
-        document.querySelectorAll('[data-study-tab]').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const tab = this.getAttribute('data-study-tab');
-                showStudyTab(tab);
-            });
+        // Edit modal management
+        document.getElementById('closeEditModal').addEventListener('click', () => {
+            document.getElementById('editModal').classList.remove('active');
         });
 
-        function showStudyTab(tabName) {
-            document.querySelectorAll('.study-section').forEach(section => {
-                section.classList.add('hidden');
-            });
-            document.getElementById(`${tabName}-section`).classList.remove('hidden');
+        // Function to open edit modal
+        function openEditModal(item, type) {
+            currentEditItem = item;
+            currentEditType = type;
+            
+            const editModal = document.getElementById('editModal');
+            const editForm = document.getElementById('editForm');
+            const editModalTitle = document.getElementById('editModalTitle');
+            
+            // Set modal title
+            editModalTitle.textContent = `Edit ${type.charAt(0).toUpperCase() + type.slice(1)}`;
+            
+            // Clear previous form
+            editForm.innerHTML = '';
+            
+            // Create form based on type
+            let formHTML = '';
+            
+            switch(type) {
+                case 'pocket':
+                    formHTML = `
+                        <div class="form-group">
+                            <label for="edit-pocket-amount">Amount (Rs.)</label>
+                            <input type="number" id="edit-pocket-amount" value="${item.amount}" step="0.01" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-pocket-date">Date Received</label>
+                            <input type="date" id="edit-pocket-date" value="${item.date}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-pocket-source">Source</label>
+                            <input type="text" id="edit-pocket-source" value="${item.source}" required>
+                        </div>
+                    `;
+                    break;
+                    
+                case 'expense':
+                    formHTML = `
+                        <div class="form-group">
+                            <label for="edit-expense-amount">Amount (Rs.)</label>
+                            <input type="number" id="edit-expense-amount" value="${item.amount}" step="0.01" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-expense-date">Date</label>
+                            <input type="date" id="edit-expense-date" value="${item.date}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-expense-category">Category</label>
+                            <select id="edit-expense-category" required>
+                                <option value="food" ${item.category === 'food' ? 'selected' : ''}>Food</option>
+                                <option value="transport" ${item.category === 'transport' ? 'selected' : ''}>Transport</option>
+                                <option value="entertainment" ${item.category === 'entertainment' ? 'selected' : ''}>Entertainment</option>
+                                <option value="bills" ${item.category === 'bills' ? 'selected' : ''}>Bills</option>
+                                <option value="other" ${item.category === 'other' ? 'selected' : ''}>Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-expense-description">Description</label>
+                            <input type="text" id="edit-expense-description" value="${item.description}" required>
+                        </div>
+                    `;
+                    break;
+                    
+                case 'loan':
+                    formHTML = `
+                        <div class="form-group">
+                            <label for="edit-loan-amount">Amount (Rs.)</label>
+                            <input type="number" id="edit-loan-amount" value="${item.amount}" step="0.01" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-loan-type">Type</label>
+                            <select id="edit-loan-type" required>
+                                <option value="given" ${item.type === 'given' ? 'selected' : ''}>Given to Someone</option>
+                                <option value="taken" ${item.type === 'taken' ? 'selected' : ''}>Taken from Someone</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-loan-person">Person</label>
+                            <input type="text" id="edit-loan-person" value="${item.person}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-loan-date">Date</label>
+                            <input type="date" id="edit-loan-date" value="${item.date}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-return-date">Return Date</label>
+                            <input type="date" id="edit-return-date" value="${item.returnDate}" required>
+                        </div>
+                    `;
+                    break;
+                    
+                case 'food':
+                    formHTML = `
+                        <div class="form-group">
+                            <label for="edit-food-name">Food Name</label>
+                            <input type="text" id="edit-food-name" value="${item.name}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-food-price">Price (Rs.)</label>
+                            <input type="number" id="edit-food-price" value="${item.price}" step="0.01" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-food-category">Category</label>
+                            <select id="edit-food-category" required>
+                                <option value="breakfast" ${item.category === 'breakfast' ? 'selected' : ''}>Breakfast</option>
+                                <option value="lunch" ${item.category === 'lunch' ? 'selected' : ''}>Lunch</option>
+                                <option value="dinner" ${item.category === 'dinner' ? 'selected' : ''}>Dinner</option>
+                                <option value="snacks" ${item.category === 'snacks' ? 'selected' : ''}>Snacks</option>
+                                <option value="drinks" ${item.category === 'drinks' ? 'selected' : ''}>Drinks</option>
+                            </select>
+                        </div>
+                    `;
+                    break;
+                    
+                case 'class':
+                    formHTML = `
+                        <div class="form-group">
+                            <label for="edit-class-name">Class Name</label>
+                            <input type="text" id="edit-class-name" value="${item.name}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-class-day">Day</label>
+                            <select id="edit-class-day" required>
+                                <option value="monday" ${item.day === 'monday' ? 'selected' : ''}>Monday</option>
+                                <option value="tuesday" ${item.day === 'tuesday' ? 'selected' : ''}>Tuesday</option>
+                                <option value="wednesday" ${item.day === 'wednesday' ? 'selected' : ''}>Wednesday</option>
+                                <option value="thursday" ${item.day === 'thursday' ? 'selected' : ''}>Thursday</option>
+                                <option value="friday" ${item.day === 'friday' ? 'selected' : ''}>Friday</option>
+                                <option value="saturday" ${item.day === 'saturday' ? 'selected' : ''}>Saturday</option>
+                                <option value="sunday" ${item.day === 'sunday' ? 'selected' : ''}>Sunday</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-class-time">Time</label>
+                            <input type="time" id="edit-class-time" value="${item.time}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-class-location">Location</label>
+                            <input type="text" id="edit-class-location" value="${item.location}" required>
+                        </div>
+                    `;
+                    break;
+                    
+                case 'assignment':
+                    formHTML = `
+                        <div class="form-group">
+                            <label for="edit-assignment-title">Title</label>
+                            <input type="text" id="edit-assignment-title" value="${item.title}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-assignment-subject">Subject</label>
+                            <input type="text" id="edit-assignment-subject" value="${item.subject}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-assignment-deadline">Deadline</label>
+                            <input type="datetime-local" id="edit-assignment-deadline" value="${item.deadline}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-assignment-topic">Topic/Description</label>
+                            <textarea id="edit-assignment-topic" rows="3" required>${item.topic}</textarea>
+                        </div>
+                    `;
+                    break;
+                    
+                case 'exam':
+                    formHTML = `
+                        <div class="form-group">
+                            <label for="edit-exam-subject">Subject</label>
+                            <input type="text" id="edit-exam-subject" value="${item.subject}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-exam-date">Date & Time</label>
+                            <input type="datetime-local" id="edit-exam-date" value="${item.date}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-exam-location">Location</label>
+                            <input type="text" id="edit-exam-location" value="${item.location}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-exam-topics">Topics to Study</label>
+                            <textarea id="edit-exam-topics" rows="3" required>${item.topics}</textarea>
+                        </div>
+                    `;
+                    break;
+            }
+            
+            formHTML += `<button type="submit" class="btn" style="margin-top: 20px;">Save Changes</button>`;
+            editForm.innerHTML = formHTML;
+            
+            // Show modal
+            editModal.classList.add('active');
         }
 
-        // Pocket Money Form
+        // Edit form submission
+        document.getElementById('editForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (!currentEditItem || !currentEditType) return;
+            
+            // Update item based on type
+            switch(currentEditType) {
+                case 'pocket':
+                    currentEditItem.amount = parseFloat(document.getElementById('edit-pocket-amount').value);
+                    currentEditItem.date = document.getElementById('edit-pocket-date').value;
+                    currentEditItem.source = document.getElementById('edit-pocket-source').value;
+                    break;
+                    
+                case 'expense':
+                    currentEditItem.amount = parseFloat(document.getElementById('edit-expense-amount').value);
+                    currentEditItem.date = document.getElementById('edit-expense-date').value;
+                    currentEditItem.category = document.getElementById('edit-expense-category').value;
+                    currentEditItem.description = document.getElementById('edit-expense-description').value;
+                    break;
+                    
+                case 'loan':
+                    currentEditItem.amount = parseFloat(document.getElementById('edit-loan-amount').value);
+                    currentEditItem.type = document.getElementById('edit-loan-type').value;
+                    currentEditItem.person = document.getElementById('edit-loan-person').value;
+                    currentEditItem.date = document.getElementById('edit-loan-date').value;
+                    currentEditItem.returnDate = document.getElementById('edit-return-date').value;
+                    break;
+                    
+                case 'food':
+                    currentEditItem.name = document.getElementById('edit-food-name').value;
+                    currentEditItem.price = parseFloat(document.getElementById('edit-food-price').value);
+                    currentEditItem.category = document.getElementById('edit-food-category').value;
+                    break;
+                    
+                case 'class':
+                    currentEditItem.name = document.getElementById('edit-class-name').value;
+                    currentEditItem.day = document.getElementById('edit-class-day').value;
+                    currentEditItem.time = document.getElementById('edit-class-time').value;
+                    currentEditItem.location = document.getElementById('edit-class-location').value;
+                    break;
+                    
+                case 'assignment':
+                    currentEditItem.title = document.getElementById('edit-assignment-title').value;
+                    currentEditItem.subject = document.getElementById('edit-assignment-subject').value;
+                    currentEditItem.deadline = document.getElementById('edit-assignment-deadline').value;
+                    currentEditItem.topic = document.getElementById('edit-assignment-topic').value;
+                    break;
+                    
+                case 'exam':
+                    currentEditItem.subject = document.getElementById('edit-exam-subject').value;
+                    currentEditItem.date = document.getElementById('edit-exam-date').value;
+                    currentEditItem.location = document.getElementById('edit-exam-location').value;
+                    currentEditItem.topics = document.getElementById('edit-exam-topics').value;
+                    break;
+            }
+            
+            saveData();
+            updateAllDisplays();
+            document.getElementById('editModal').classList.remove('active');
+            showNotification('Item Updated', 'The item has been updated successfully', 'success');
+        });
+
+        // Form submission handlers
         document.getElementById('pocket-money-form').addEventListener('submit', function(e) {
             e.preventDefault();
             
@@ -852,11 +1951,9 @@
             saveData();
             updateFinanceDisplays();
             this.reset();
-            
-            alert('Pocket money added successfully!');
+            showNotification('Success', 'Pocket money added successfully!', 'success');
         });
 
-        // Expense Form
         document.getElementById('expense-form').addEventListener('submit', function(e) {
             e.preventDefault();
             
@@ -872,11 +1969,9 @@
             saveData();
             updateFinanceDisplays();
             this.reset();
-            
-            alert('Expense added successfully!');
+            showNotification('Success', 'Expense added successfully!', 'success');
         });
 
-        // Loan Form
         document.getElementById('loan-form').addEventListener('submit', function(e) {
             e.preventDefault();
             
@@ -893,11 +1988,9 @@
             saveData();
             updateFinanceDisplays();
             this.reset();
-            
-            alert('Loan added successfully!');
+            showNotification('Success', 'Loan added successfully!', 'success');
         });
 
-        // Food Form
         document.getElementById('food-form').addEventListener('submit', function(e) {
             e.preventDefault();
             
@@ -912,11 +2005,9 @@
             saveData();
             updateFoodDisplay();
             this.reset();
-            
-            alert('Food item added successfully!');
+            showNotification('Success', 'Food item added successfully!', 'success');
         });
 
-        // Class Form
         document.getElementById('class-form').addEventListener('submit', function(e) {
             e.preventDefault();
             
@@ -932,11 +2023,9 @@
             saveData();
             updateStudyDisplays();
             this.reset();
-            
-            alert('Class added successfully!');
+            showNotification('Success', 'Class added successfully!', 'success');
         });
 
-        // Assignment Form
         document.getElementById('assignment-form').addEventListener('submit', function(e) {
             e.preventDefault();
             
@@ -952,11 +2041,9 @@
             saveData();
             updateStudyDisplays();
             this.reset();
-            
-            alert('Assignment added successfully!');
+            showNotification('Success', 'Assignment added successfully!', 'success');
         });
 
-        // Exam Form
         document.getElementById('exam-form').addEventListener('submit', function(e) {
             e.preventDefault();
             
@@ -972,8 +2059,7 @@
             saveData();
             updateStudyDisplays();
             this.reset();
-            
-            alert('Exam added successfully!');
+            showNotification('Success', 'Exam added successfully!', 'success');
         });
 
         // Update all displays
@@ -981,76 +2067,84 @@
             updateFinanceDisplays();
             updateFoodDisplay();
             updateStudyDisplays();
+            updateBalanceDisplay();
         }
 
-        // Update finance displays
+        // Update finance displays with tables
         function updateFinanceDisplays() {
-            // Update pocket money list
-            const pocketMoneyList = document.getElementById('pocket-money-list');
-            pocketMoneyList.innerHTML = '';
+            // Update pocket money table
+            const pocketMoneyTable = document.getElementById('pocket-money-table');
+            pocketMoneyTable.innerHTML = '';
             
             appData.pocketMoney.forEach(item => {
-                const card = document.createElement('div');
-                card.className = 'data-card income';
-                card.innerHTML = `
-                    <div class="data-header">
-                        <h4>${item.source}</h4>
-                        <div class="data-actions">
-                            <button class="action-btn delete-pocket" data-id="${item.id}">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <p>Amount: $${item.amount.toFixed(2)}</p>
-                    <p>Date: ${new Date(item.date).toLocaleDateString()}</p>
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${new Date(item.date).toLocaleDateString()}</td>
+                    <td>${item.source}</td>
+                    <td class="amount-positive">Rs. ${item.amount.toFixed(2)}</td>
+                    <td class="table-actions">
+                        <button class="action-btn edit-btn" data-id="${item.id}" data-type="pocket">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="action-btn delete-btn" data-id="${item.id}" data-type="pocket">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
                 `;
-                pocketMoneyList.appendChild(card);
+                pocketMoneyTable.appendChild(row);
             });
 
-            // Update expenses list
-            const expensesList = document.getElementById('expenses-list');
-            expensesList.innerHTML = '';
+            // Update expenses table
+            const expensesTable = document.getElementById('expenses-table');
+            expensesTable.innerHTML = '';
             
             appData.expenses.forEach(item => {
-                const card = document.createElement('div');
-                card.className = 'data-card expense';
-                card.innerHTML = `
-                    <div class="data-header">
-                        <h4>${item.description}</h4>
-                        <div class="data-actions">
-                            <button class="action-btn delete-expense" data-id="${item.id}">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <p>Amount: $${item.amount.toFixed(2)}</p>
-                    <p>Category: ${item.category}</p>
-                    <p>Date: ${new Date(item.date).toLocaleDateString()}</p>
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${new Date(item.date).toLocaleDateString()}</td>
+                    <td>${item.description}</td>
+                    <td>${item.category}</td>
+                    <td class="amount-negative">Rs. ${item.amount.toFixed(2)}</td>
+                    <td class="table-actions">
+                        <button class="action-btn edit-btn" data-id="${item.id}" data-type="expense">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="action-btn delete-btn" data-id="${item.id}" data-type="expense">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
                 `;
-                expensesList.appendChild(card);
+                expensesTable.appendChild(row);
             });
 
-            // Update loans list
-            const loansList = document.getElementById('loans-list');
-            loansList.innerHTML = '';
+            // Update loans table
+            const loansTable = document.getElementById('loans-table');
+            loansTable.innerHTML = '';
             
             appData.loans.forEach(item => {
-                const card = document.createElement('div');
-                card.className = 'data-card loan';
-                card.innerHTML = `
-                    <div class="data-header">
-                        <h4>${item.type === 'given' ? 'Given to' : 'Taken from'} ${item.person}</h4>
-                        <div class="data-actions">
-                            <button class="action-btn delete-loan" data-id="${item.id}">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <p>Amount: $${item.amount.toFixed(2)}</p>
-                    <p>Date: ${new Date(item.date).toLocaleDateString()}</p>
-                    <p>Return Date: ${new Date(item.returnDate).toLocaleDateString()}</p>
+                const today = new Date();
+                const returnDate = new Date(item.returnDate);
+                const isOverdue = returnDate < today;
+                const status = isOverdue ? '<span class="badge badge-danger">Overdue</span>' : '<span class="badge badge-success">Active</span>';
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${new Date(item.date).toLocaleDateString()}</td>
+                    <td>${item.person}</td>
+                    <td>${item.type === 'given' ? 'Given' : 'Taken'}</td>
+                    <td class="${item.type === 'given' ? 'amount-negative' : 'amount-positive'}">Rs. ${item.amount.toFixed(2)}</td>
+                    <td>${new Date(item.returnDate).toLocaleDateString()}</td>
+                    <td>${status}</td>
+                    <td class="table-actions">
+                        <button class="action-btn edit-btn" data-id="${item.id}" data-type="loan">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="action-btn delete-btn" data-id="${item.id}" data-type="loan">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
                 `;
-                loansList.appendChild(card);
+                loansTable.appendChild(row);
             });
 
             // Update summary
@@ -1059,58 +2153,73 @@
             const currentBalance = totalPocketMoney - totalExpenses;
             const activeLoans = appData.loans.length;
 
-            document.getElementById('total-pocket-money').textContent = `$${totalPocketMoney.toFixed(2)}`;
-            document.getElementById('total-expenses').textContent = `$${totalExpenses.toFixed(2)}`;
-            document.getElementById('current-balance').textContent = `$${currentBalance.toFixed(2)}`;
+            document.getElementById('total-pocket-money').textContent = `Rs. ${totalPocketMoney.toFixed(2)}`;
+            document.getElementById('total-expenses').textContent = `Rs. ${totalExpenses.toFixed(2)}`;
+            document.getElementById('current-balance').textContent = `Rs. ${currentBalance.toFixed(2)}`;
             document.getElementById('active-loans').textContent = activeLoans;
 
-            // Add delete event listeners
-            document.querySelectorAll('.delete-pocket').forEach(btn => {
+            // Add event listeners for edit and delete buttons
+            document.querySelectorAll('.edit-btn').forEach(btn => {
                 btn.addEventListener('click', function() {
                     const id = parseInt(this.getAttribute('data-id'));
-                    deletePocketMoney(id);
+                    const type = this.getAttribute('data-type');
+                    const item = getItemById(id, type);
+                    if (item) openEditModal(item, type);
                 });
             });
 
-            document.querySelectorAll('.delete-expense').forEach(btn => {
+            document.querySelectorAll('.delete-btn').forEach(btn => {
                 btn.addEventListener('click', function() {
                     const id = parseInt(this.getAttribute('data-id'));
-                    deleteExpense(id);
-                });
-            });
-
-            document.querySelectorAll('.delete-loan').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const id = parseInt(this.getAttribute('data-id'));
-                    deleteLoan(id);
+                    const type = this.getAttribute('data-type');
+                    deleteItem(id, type);
                 });
             });
         }
 
-        // Update food display
+        // Helper function to get item by ID and type
+        function getItemById(id, type) {
+            switch(type) {
+                case 'pocket': return appData.pocketMoney.find(item => item.id === id);
+                case 'expense': return appData.expenses.find(item => item.id === id);
+                case 'loan': return appData.loans.find(item => item.id === id);
+                case 'food': return appData.foodMenu.find(item => item.id === id);
+                case 'class': return appData.classes.find(item => item.id === id);
+                case 'assignment': return appData.assignments.find(item => item.id === id);
+                case 'exam': return appData.exams.find(item => item.id === id);
+                default: return null;
+            }
+        }
+
+        // Update food display with table
         function updateFoodDisplay() {
-            const foodMenu = document.getElementById('food-menu');
-            foodMenu.innerHTML = '';
+            const foodMenuTable = document.getElementById('food-menu-table');
+            foodMenuTable.innerHTML = '';
             
             appData.foodMenu.forEach(item => {
-                const menuItem = document.createElement('div');
-                menuItem.className = 'menu-item';
-                menuItem.innerHTML = `
-                    <div class="menu-info">
-                        <h4>${item.name}</h4>
-                        <p>${item.category.charAt(0).toUpperCase() + item.category.slice(1)}</p>
-                        <div class="menu-price">Rs. ${item.price.toFixed(2)}</div>
-                    </div>
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${item.name}</td>
+                    <td>${item.category.charAt(0).toUpperCase() + item.category.slice(1)}</td>
+                    <td class="amount-positive">Rs. ${item.price.toFixed(2)}</td>
+                    <td class="table-actions">
+                        <button class="action-btn edit-btn" data-id="${item.id}" data-type="food">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="action-btn delete-btn" data-id="${item.id}" data-type="food">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
                 `;
-                foodMenu.appendChild(menuItem);
+                foodMenuTable.appendChild(row);
             });
         }
 
-        // Update study displays
+        // Update study displays with tables
         function updateStudyDisplays() {
             // Update classes schedule
-            const classesSchedule = document.getElementById('classes-schedule');
-            classesSchedule.innerHTML = '';
+            const scheduleGrid = document.querySelector('#classes-tab .schedule-grid');
+            scheduleGrid.innerHTML = '';
             
             const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
             
@@ -1118,10 +2227,10 @@
                 const dayClasses = appData.classes.filter(cls => cls.day === day);
                 if (dayClasses.length > 0) {
                     const daySection = document.createElement('div');
-                    daySection.className = 'schedule-day';
+                    daySection.className = 'day-schedule';
                     daySection.innerHTML = `
                         <div class="day-header">
-                            <h3>${day.charAt(0).toUpperCase() + day.slice(1)}</h3>
+                            ${day.charAt(0).toUpperCase() + day.slice(1)}
                         </div>
                     `;
                     
@@ -1134,122 +2243,169 @@
                                 <p>${cls.location}</p>
                             </div>
                             <div class="schedule-time">${cls.time}</div>
+                            <div class="table-actions">
+                                <button class="action-btn edit-btn" data-id="${cls.id}" data-type="class">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="action-btn delete-btn" data-id="${cls.id}" data-type="class">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
                         `;
                         daySection.appendChild(classItem);
                     });
                     
-                    classesSchedule.appendChild(daySection);
+                    scheduleGrid.appendChild(daySection);
                 }
             });
 
-            // Update assignments list
-            const assignmentsList = document.getElementById('assignments-list');
-            assignmentsList.innerHTML = '';
+            // Update assignments table
+            const assignmentsTable = document.getElementById('assignments-table');
+            assignmentsTable.innerHTML = '';
             
             appData.assignments.forEach(item => {
-                const card = document.createElement('div');
-                card.className = 'data-card';
-                card.innerHTML = `
-                    <div class="data-header">
-                        <h4>${item.title}</h4>
-                        <div class="data-actions">
-                            <button class="action-btn delete-assignment" data-id="${item.id}">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <p>Subject: ${item.subject}</p>
-                    <p>Topic: ${item.topic}</p>
-                    <p>Deadline: ${new Date(item.deadline).toLocaleString()}</p>
+                const deadline = new Date(item.deadline);
+                const now = new Date();
+                const timeDiff = deadline - now;
+                const daysDiff = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+                
+                let status = '<span class="badge badge-success">Upcoming</span>';
+                if (daysDiff < 0) {
+                    status = '<span class="badge badge-danger">Overdue</span>';
+                } else if (daysDiff <= 3) {
+                    status = '<span class="badge badge-warning">Due Soon</span>';
+                }
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${item.title}</td>
+                    <td>${item.subject}</td>
+                    <td>${deadline.toLocaleString()}</td>
+                    <td>${status}</td>
+                    <td class="table-actions">
+                        <button class="action-btn edit-btn" data-id="${item.id}" data-type="assignment">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="action-btn delete-btn" data-id="${item.id}" data-type="assignment">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
                 `;
-                assignmentsList.appendChild(card);
+                assignmentsTable.appendChild(row);
             });
 
-            // Update exams list
-            const examsList = document.getElementById('exams-list');
-            examsList.innerHTML = '';
+            // Update exams table
+            const examsTable = document.getElementById('exams-table');
+            examsTable.innerHTML = '';
             
             appData.exams.forEach(item => {
-                const card = document.createElement('div');
-                card.className = 'data-card';
-                card.innerHTML = `
-                    <div class="data-header">
-                        <h4>${item.subject}</h4>
-                        <div class="data-actions">
-                            <button class="action-btn delete-exam" data-id="${item.id}">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <p>Date: ${new Date(item.date).toLocaleString()}</p>
-                    <p>Location: ${item.location}</p>
-                    <p>Topics: ${item.topics}</p>
+                const examDate = new Date(item.date);
+                const now = new Date();
+                const timeDiff = examDate - now;
+                const daysDiff = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+                
+                let status = '<span class="badge badge-success">Upcoming</span>';
+                if (daysDiff < 0) {
+                    status = '<span class="badge badge-danger">Completed</span>';
+                } else if (daysDiff <= 7) {
+                    status = '<span class="badge badge-warning">Soon</span>';
+                }
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${item.subject}</td>
+                    <td>${examDate.toLocaleString()}</td>
+                    <td>${item.location}</td>
+                    <td>${status}</td>
+                    <td class="table-actions">
+                        <button class="action-btn edit-btn" data-id="${item.id}" data-type="exam">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="action-btn delete-btn" data-id="${item.id}" data-type="exam">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
                 `;
-                examsList.appendChild(card);
+                examsTable.appendChild(row);
             });
 
-            // Add delete event listeners for study items
-            document.querySelectorAll('.delete-assignment').forEach(btn => {
+            // Add event listeners for edit and delete buttons
+            document.querySelectorAll('.edit-btn').forEach(btn => {
                 btn.addEventListener('click', function() {
                     const id = parseInt(this.getAttribute('data-id'));
-                    deleteAssignment(id);
+                    const type = this.getAttribute('data-type');
+                    const item = getItemById(id, type);
+                    if (item) openEditModal(item, type);
                 });
             });
 
-            document.querySelectorAll('.delete-exam').forEach(btn => {
+            document.querySelectorAll('.delete-btn').forEach(btn => {
                 btn.addEventListener('click', function() {
                     const id = parseInt(this.getAttribute('data-id'));
-                    deleteExam(id);
+                    const type = this.getAttribute('data-type');
+                    deleteItem(id, type);
                 });
             });
         }
 
-        // Delete functions
-        function deletePocketMoney(id) {
-            if (confirm('Are you sure you want to delete this pocket money entry?')) {
-                appData.pocketMoney = appData.pocketMoney.filter(item => item.id !== id);
+        // Universal delete function
+        function deleteItem(id, type) {
+            if (confirm('Are you sure you want to delete this item?')) {
+                switch(type) {
+                    case 'pocket':
+                        appData.pocketMoney = appData.pocketMoney.filter(item => item.id !== id);
+                        break;
+                    case 'expense':
+                        appData.expenses = appData.expenses.filter(item => item.id !== id);
+                        break;
+                    case 'loan':
+                        appData.loans = appData.loans.filter(item => item.id !== id);
+                        break;
+                    case 'food':
+                        appData.foodMenu = appData.foodMenu.filter(item => item.id !== id);
+                        break;
+                    case 'assignment':
+                        appData.assignments = appData.assignments.filter(item => item.id !== id);
+                        break;
+                    case 'exam':
+                        appData.exams = appData.exams.filter(item => item.id !== id);
+                        break;
+                    case 'class':
+                        appData.classes = appData.classes.filter(item => item.id !== id);
+                        break;
+                }
                 saveData();
-                updateFinanceDisplays();
-            }
-        }
-
-        function deleteExpense(id) {
-            if (confirm('Are you sure you want to delete this expense?')) {
-                appData.expenses = appData.expenses.filter(item => item.id !== id);
-                saveData();
-                updateFinanceDisplays();
-            }
-        }
-
-        function deleteLoan(id) {
-            if (confirm('Are you sure you want to delete this loan?')) {
-                appData.loans = appData.loans.filter(item => item.id !== id);
-                saveData();
-                updateFinanceDisplays();
-            }
-        }
-
-        function deleteAssignment(id) {
-            if (confirm('Are you sure you want to delete this assignment?')) {
-                appData.assignments = appData.assignments.filter(item => item.id !== id);
-                saveData();
-                updateStudyDisplays();
-            }
-        }
-
-        function deleteExam(id) {
-            if (confirm('Are you sure you want to delete this exam?')) {
-                appData.exams = appData.exams.filter(item => item.id !== id);
-                saveData();
-                updateStudyDisplays();
+                updateAllDisplays();
+                showNotification('Deleted', 'Item deleted successfully', 'success');
             }
         }
 
         // Initialize the app
         document.addEventListener('DOMContentLoaded', function() {
             loadData();
-            showFinanceTab('pocket-money');
-            showStudyTab('classes');
+            
+            // Add global event listeners for edit and delete buttons
+            document.addEventListener('click', function(e) {
+                if (e.target.closest('.edit-btn')) {
+                    const btn = e.target.closest('.edit-btn');
+                    const id = parseInt(btn.getAttribute('data-id'));
+                    const type = btn.getAttribute('data-type');
+                    const item = getItemById(id, type);
+                    if (item) openEditModal(item, type);
+                }
+                
+                if (e.target.closest('.delete-btn')) {
+                    const btn = e.target.closest('.delete-btn');
+                    const id = parseInt(btn.getAttribute('data-id'));
+                    const type = btn.getAttribute('data-type');
+                    deleteItem(id, type);
+                }
+            });
+            
+            // Request notification permission
+            if ('Notification' in window) {
+                Notification.requestPermission();
+            }
         });
     </script>
 </body>
