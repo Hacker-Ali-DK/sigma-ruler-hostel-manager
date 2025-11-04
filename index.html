@@ -11,26 +11,14 @@
             --dark-blue: #1e40af;
             --light-blue: #3b82f6;
             --accent-blue: #60a5fa;
-            --background: #0f172a;
-            --surface: #1e293b;
-            --surface-light: #334155;
-            --text-primary: #f1f5f9;
-            --text-secondary: #cbd5e1;
-            --border: #475569;
-            --success: #10b981;
-            --warning: #f59e0b;
-            --danger: #ef4444;
-            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
-        }
-
-        .light-theme {
             --background: #f8fafc;
             --surface: #ffffff;
-            --surface-light: #f1f5f9;
             --text-primary: #1e293b;
             --text-secondary: #64748b;
             --border: #e2e8f0;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
             --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
             --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
@@ -40,7 +28,6 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
         }
 
         body {
@@ -48,9 +35,6 @@
             color: var(--text-primary);
             min-height: 100vh;
             line-height: 1.6;
-            background-image: 
-                radial-gradient(circle at 10% 20%, rgba(30, 58, 138, 0.1) 0%, transparent 20%),
-                radial-gradient(circle at 90% 80%, rgba(59, 130, 246, 0.1) 0%, transparent 20%);
         }
 
         .container {
@@ -59,297 +43,78 @@
             padding: 20px;
         }
 
-        /* Header with Profile */
-        .main-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 0;
-            margin-bottom: 30px;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .profile-section {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .profile-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: var(--light-blue);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
             color: white;
-            font-size: 1.5rem;
-            cursor: pointer;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .profile-icon img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .profile-info {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .profile-name {
-            font-weight: 600;
-            font-size: 1.2rem;
-        }
-
-        .profile-balance {
-            color: var(--success);
-            font-weight: 700;
-            font-size: 1.1rem;
-        }
-
-        .app-title {
-            text-align: center;
-            flex: 1;
-        }
-
-        .app-title h1 {
-            font-size: 2.5rem;
-            background: linear-gradient(135deg, var(--light-blue), var(--accent-blue));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 5px;
-        }
-
-        .app-title p {
-            color: var(--text-secondary);
-        }
-
-        .theme-toggle {
-            background: none;
-            border: none;
-            color: var(--text-primary);
-            font-size: 1.5rem;
-            cursor: pointer;
-            padding: 10px;
-            border-radius: 50%;
-            transition: background 0.3s;
-        }
-
-        .theme-toggle:hover {
-            background: var(--surface-light);
-        }
-
-        /* Profile Modal */
-        .profile-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .profile-modal.active {
-            display: flex;
-        }
-
-        .profile-content {
-            background: var(--surface);
-            border-radius: 15px;
-            padding: 30px;
-            width: 90%;
-            max-width: 500px;
+            padding: 25px 0;
+            border-radius: 12px;
+            margin-bottom: 25px;
             box-shadow: var(--shadow-lg);
-            position: relative;
         }
 
-        .profile-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-        }
-
-        .profile-header h2 {
-            color: var(--text-primary);
-        }
-
-        .close-modal {
-            background: none;
-            border: none;
-            color: var(--text-secondary);
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-
-        .profile-image-section {
+        .header-content {
             text-align: center;
-            margin-bottom: 25px;
+            padding: 0 20px;
         }
 
-        .profile-image-container {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            background: var(--surface-light);
-            margin: 0 auto 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            position: relative;
-            border: 3px solid var(--light-blue);
-        }
-
-        .profile-image-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .profile-image-placeholder {
-            font-size: 3rem;
-            color: var(--text-secondary);
-        }
-
-        .image-upload-btn {
-            background: var(--light-blue);
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 500;
-        }
-
-        .image-upload-btn:hover {
-            background: var(--dark-blue);
-        }
-
-        .profile-form {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .form-group label {
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-
-        .form-group input {
-            padding: 12px;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            background: var(--surface-light);
-            color: var(--text-primary);
-        }
-
-        .theme-options {
-            display: flex;
-            gap: 10px;
-        }
-
-        .theme-option {
-            flex: 1;
-            padding: 15px;
-            border: 2px solid var(--border);
-            border-radius: 8px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .theme-option.active {
-            border-color: var(--light-blue);
-            background: var(--surface-light);
-        }
-
-        .theme-option i {
-            font-size: 1.5rem;
+        .logo {
+            font-size: 2.5rem;
             margin-bottom: 8px;
+            font-weight: 800;
         }
 
-        .save-profile-btn {
-            background: var(--success);
-            color: white;
-            border: none;
-            padding: 12px;
-            border-radius: 8px;
-            cursor: pointer;
+        header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 8px;
             font-weight: 600;
-            margin-top: 10px;
         }
 
-        .save-profile-btn:hover {
-            background: #0da271;
+        header p {
+            font-size: 1rem;
+            opacity: 0.9;
         }
 
         /* Dashboard Grid */
         .dashboard {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-            margin-bottom: 40px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
         }
 
         .dashboard-card {
             background: var(--surface);
             border-radius: 12px;
-            padding: 30px;
+            padding: 25px;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s ease;
             border: 1px solid var(--border);
             box-shadow: var(--shadow);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .dashboard-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 5px;
-            background: linear-gradient(90deg, var(--light-blue), var(--accent-blue));
         }
 
         .dashboard-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-3px);
             box-shadow: var(--shadow-lg);
+            border-color: var(--light-blue);
         }
 
         .card-icon {
-            font-size: 3rem;
-            margin-bottom: 15px;
-            color: var(--light-blue);
+            font-size: 2.5rem;
+            margin-bottom: 12px;
+            color: var(--primary-blue);
         }
 
         .dashboard-card h2 {
-            margin-bottom: 10px;
-            color: var(--text-primary);
-            font-size: 1.4rem;
+            margin-bottom: 8px;
+            color: var(--primary-blue);
+            font-size: 1.3rem;
         }
 
         .dashboard-card p {
             color: var(--text-secondary);
+            font-size: 0.9rem;
         }
 
         /* Module Sections */
@@ -357,8 +122,8 @@
             display: none;
             background: var(--surface);
             border-radius: 12px;
-            padding: 30px;
-            margin-bottom: 30px;
+            padding: 20px;
+            margin-bottom: 25px;
             box-shadow: var(--shadow);
             border: 1px solid var(--border);
         }
@@ -377,14 +142,14 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 30px;
-            padding-bottom: 20px;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
             border-bottom: 2px solid var(--light-blue);
         }
 
         .module-header h2 {
-            color: var(--text-primary);
-            font-size: 1.8rem;
+            color: var(--primary-blue);
+            font-size: 1.5rem;
             display: flex;
             align-items: center;
             gap: 10px;
@@ -399,6 +164,7 @@
             cursor: pointer;
             font-weight: 600;
             transition: background 0.3s;
+            font-size: 0.9rem;
         }
 
         .back-btn:hover {
@@ -408,23 +174,26 @@
         /* Navigation Tabs */
         .nav-tabs {
             display: flex;
-            gap: 10px;
-            margin-bottom: 25px;
+            gap: 8px;
+            margin-bottom: 20px;
             flex-wrap: wrap;
+            overflow-x: auto;
+            padding-bottom: 5px;
         }
 
         .tab-btn {
             background: var(--surface);
             border: 1px solid var(--border);
-            padding: 12px 20px;
+            padding: 10px 15px;
             border-radius: 8px;
             cursor: pointer;
             font-weight: 500;
             transition: all 0.3s;
             flex: 1;
-            min-width: 120px;
+            min-width: 110px;
             text-align: center;
-            color: var(--text-primary);
+            font-size: 0.9rem;
+            white-space: nowrap;
         }
 
         .tab-btn.active {
@@ -441,15 +210,20 @@
         .form-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
         }
 
         label {
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             font-weight: 600;
             color: var(--text-primary);
+            font-size: 0.9rem;
         }
 
         input, select, textarea {
@@ -459,8 +233,7 @@
             border-radius: 8px;
             font-size: 16px;
             transition: border 0.3s;
-            background: var(--surface-light);
-            color: var(--text-primary);
+            background: var(--surface);
         }
 
         input:focus, select:focus, textarea:focus {
@@ -487,13 +260,13 @@
 
         /* Enhanced Table Styles */
         .data-section {
-            margin-top: 30px;
+            margin-top: 25px;
         }
 
         .section-title {
-            margin-bottom: 20px;
-            color: var(--text-primary);
-            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: var(--primary-blue);
+            font-size: 1.3rem;
         }
 
         .table-container {
@@ -501,7 +274,7 @@
             border-radius: 12px;
             overflow: hidden;
             box-shadow: var(--shadow);
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             overflow-x: auto;
         }
 
@@ -515,14 +288,14 @@
         .data-table th {
             background: var(--primary-blue);
             color: white;
-            padding: 15px 12px;
+            padding: 12px 10px;
             text-align: left;
             font-weight: 600;
             font-size: 0.9rem;
         }
 
         .data-table td {
-            padding: 12px;
+            padding: 10px;
             border-bottom: 1px solid var(--border);
         }
 
@@ -531,7 +304,7 @@
         }
 
         .data-table tr:hover {
-            background: var(--surface-light);
+            background: #f8fafc;
         }
 
         .amount-positive {
@@ -546,7 +319,7 @@
 
         .table-actions {
             display: flex;
-            gap: 8px;
+            gap: 6px;
             justify-content: center;
         }
 
@@ -555,7 +328,7 @@
             border: none;
             cursor: pointer;
             font-size: 1rem;
-            padding: 6px;
+            padding: 5px;
             border-radius: 4px;
             transition: all 0.3s;
         }
@@ -569,21 +342,21 @@
         }
 
         .action-btn:hover {
-            background: var(--surface-light);
+            background: #f1f5f9;
             transform: scale(1.1);
         }
 
         /* Summary Cards */
         .summary-cards {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
         }
 
         .summary-card {
             background: var(--surface);
-            padding: 25px;
+            padding: 20px;
             border-radius: 12px;
             text-align: center;
             box-shadow: var(--shadow);
@@ -591,13 +364,13 @@
         }
 
         .summary-card h3 {
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             color: var(--text-secondary);
-            font-size: 1rem;
+            font-size: 0.9rem;
         }
 
         .summary-amount {
-            font-size: 2rem;
+            font-size: 1.5rem;
             font-weight: 700;
         }
 
@@ -616,22 +389,22 @@
         /* Schedule Styles */
         .schedule-grid {
             display: grid;
-            gap: 20px;
+            gap: 15px;
         }
 
         .day-schedule {
             background: var(--surface);
             border-radius: 12px;
-            padding: 20px;
+            padding: 15px;
             box-shadow: var(--shadow);
         }
 
         .day-header {
             background: var(--light-blue);
             color: white;
-            padding: 15px;
+            padding: 12px;
             border-radius: 8px;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             font-weight: 600;
         }
 
@@ -639,7 +412,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px;
+            padding: 12px;
             border-bottom: 1px solid var(--border);
         }
 
@@ -649,8 +422,8 @@
 
         .schedule-time {
             font-weight: 600;
-            color: var(--light-blue);
-            min-width: 80px;
+            color: var(--primary-blue);
+            min-width: 70px;
         }
 
         /* Edit Modal */
@@ -674,9 +447,9 @@
         .edit-content {
             background: var(--surface);
             border-radius: 15px;
-            padding: 30px;
+            padding: 25px;
             width: 90%;
-            max-width: 600px;
+            max-width: 500px;
             box-shadow: var(--shadow-lg);
             position: relative;
             max-height: 90vh;
@@ -687,7 +460,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
 
         .edit-header h2 {
@@ -700,19 +473,19 @@
             top: 20px;
             right: 20px;
             z-index: 1000;
-            max-width: 400px;
+            max-width: 350px;
         }
 
         .notification {
             background: var(--surface);
             border-left: 4px solid var(--light-blue);
-            padding: 15px 20px;
+            padding: 12px 15px;
             margin-bottom: 10px;
             border-radius: 8px;
             box-shadow: var(--shadow-lg);
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 12px;
             animation: slideInRight 0.3s ease;
         }
 
@@ -729,7 +502,7 @@
         }
 
         .notification-icon {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
         }
 
         .notification-content {
@@ -738,14 +511,20 @@
 
         .notification-title {
             font-weight: 600;
-            margin-bottom: 5px;
+            margin-bottom: 3px;
+            font-size: 0.9rem;
+        }
+
+        .notification-message {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
         }
 
         .notification-close {
             background: none;
             border: none;
             cursor: pointer;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             color: var(--text-secondary);
         }
 
@@ -775,16 +554,12 @@
             }
             
             .nav-tabs {
-                flex-direction: column;
-            }
-            
-            .tab-btn {
-                min-width: auto;
+                flex-direction: row;
             }
             
             .module-header {
                 flex-direction: column;
-                gap: 15px;
+                gap: 12px;
                 align-items: flex-start;
             }
             
@@ -794,17 +569,23 @@
             
             .data-table th,
             .data-table td {
-                padding: 10px 8px;
+                padding: 8px 6px;
             }
 
-            .main-header {
-                flex-direction: column;
-                gap: 15px;
+            .header-content {
                 text-align: center;
             }
 
-            .profile-section {
-                justify-content: center;
+            .logo {
+                font-size: 2rem;
+            }
+
+            header h1 {
+                font-size: 1.5rem;
+            }
+
+            header p {
+                font-size: 0.9rem;
             }
         }
 
@@ -814,7 +595,7 @@
             }
             
             .module {
-                padding: 20px;
+                padding: 15px;
             }
             
             .dashboard-card {
@@ -823,7 +604,13 @@
             
             .table-actions {
                 flex-direction: column;
-                gap: 5px;
+                gap: 4px;
+            }
+
+            .notification-container {
+                right: 10px;
+                left: 10px;
+                max-width: none;
             }
         }
 
@@ -846,9 +633,9 @@
 
         .badge {
             display: inline-block;
-            padding: 4px 8px;
-            border-radius: 12px;
-            font-size: 0.8rem;
+            padding: 3px 6px;
+            border-radius: 10px;
+            font-size: 0.7rem;
             font-weight: 600;
         }
 
@@ -868,50 +655,7 @@
         }
     </style>
 </head>
-<body class="dark-theme">
-    <!-- Profile Modal -->
-    <div class="profile-modal" id="profileModal">
-        <div class="profile-content">
-            <div class="profile-header">
-                <h2>Profile Settings</h2>
-                <button class="close-modal" id="closeProfileModal">&times;</button>
-            </div>
-            
-            <div class="profile-image-section">
-                <div class="profile-image-container" id="profileImageContainer">
-                    <div class="profile-image-placeholder">
-                        <i class="fas fa-user"></i>
-                    </div>
-                </div>
-                <input type="file" id="imageUpload" accept="image/*" style="display: none;">
-                <button class="image-upload-btn" id="uploadImageBtn">Upload Image</button>
-            </div>
-            
-            <form class="profile-form" id="profileForm">
-                <div class="form-group">
-                    <label for="userName">Your Name</label>
-                    <input type="text" id="userName" placeholder="Enter your name" required>
-                </div>
-                
-                <div class="form-group">
-                    <label>Theme Preference</label>
-                    <div class="theme-options">
-                        <div class="theme-option active" data-theme="dark">
-                            <i class="fas fa-moon"></i>
-                            <div>Dark</div>
-                        </div>
-                        <div class="theme-option" data-theme="light">
-                            <i class="fas fa-sun"></i>
-                            <div>Light</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <button type="submit" class="save-profile-btn">Save Changes</button>
-            </form>
-        </div>
-    </div>
-
+<body>
     <!-- Edit Modal -->
     <div class="edit-modal" id="editModal">
         <div class="edit-content">
@@ -929,28 +673,13 @@
     <div class="notification-container" id="notificationContainer"></div>
 
     <div class="container">
-        <!-- Header with Profile -->
-        <header class="main-header">
-            <div class="profile-section">
-                <div class="profile-icon" id="profileIcon">
-                    <div class="profile-image-placeholder">
-                        <i class="fas fa-user"></i>
-                    </div>
-                </div>
-                <div class="profile-info">
-                    <div class="profile-name" id="profileName">Sigma Ruler</div>
-                    <div class="profile-balance" id="profileBalance">Rs. 0.00</div>
-                </div>
+        <!-- Welcome Dashboard -->
+        <header>
+            <div class="header-content">
+                <div class="logo">Σ_R</div>
+                <h1>Hello, Sigma-Ruler!</h1>
+                <p>Your Professional Hostel Management System</p>
             </div>
-            
-            <div class="app-title">
-                <h1>Hostel Manager</h1>
-                <p>Your All-in-One Hostel Management Solution</p>
-            </div>
-            
-            <button class="theme-toggle" id="themeToggle">
-                <i class="fas fa-moon"></i>
-            </button>
         </header>
 
         <!-- Main Dashboard -->
@@ -1374,9 +1103,7 @@
         // Data structure
         let appData = {
             profile: {
-                name: "Sigma Ruler",
-                image: null,
-                theme: "dark"
+                name: "Sigma Ruler"
             },
             pocketMoney: [],
             expenses: [],
@@ -1391,8 +1118,8 @@
         let currentEditItem = null;
         let currentEditType = null;
 
-        // Notification system
-        function showNotification(title, message, type = 'info') {
+        // Enhanced Notification system
+        function showNotification(title, message, type = 'info', duration = 5000) {
             const notificationContainer = document.getElementById('notificationContainer');
             const notification = document.createElement('div');
             notification.className = `notification ${type}`;
@@ -1411,24 +1138,26 @@
             
             notificationContainer.appendChild(notification);
             
-            // Auto remove after 5 seconds
-            setTimeout(() => {
+            // Auto remove after duration
+            const timeout = setTimeout(() => {
                 if (notification.parentNode) {
                     notification.style.animation = 'slideInRight 0.3s ease reverse';
                     setTimeout(() => notification.remove(), 300);
                 }
-            }, 5000);
+            }, duration);
             
             // Close button
             notification.querySelector('.notification-close').addEventListener('click', () => {
+                clearTimeout(timeout);
                 notification.style.animation = 'slideInRight 0.3s ease reverse';
                 setTimeout(() => notification.remove(), 300);
             });
         }
 
-        // Check for upcoming deadlines and classes
+        // Enhanced notification checker
         function checkNotifications() {
             const now = new Date();
+            let hasUpcomingItems = false;
             
             // Check assignments
             appData.assignments.forEach(assignment => {
@@ -1440,8 +1169,10 @@
                     showNotification(
                         'Assignment Due Soon!',
                         `${assignment.title} is due in ${Math.ceil(hoursDiff)} hours`,
-                        'warning'
+                        'warning',
+                        8000
                     );
+                    hasUpcomingItems = true;
                 }
             });
             
@@ -1451,32 +1182,92 @@
                 const timeDiff = examDate - now;
                 const daysDiff = timeDiff / (1000 * 60 * 60 * 24);
                 
-                if (daysDiff > 0 && daysDiff <= 7) {
+                if (daysDiff > 0 && daysDiff <= 3) {
                     showNotification(
                         'Upcoming Exam!',
                         `${exam.subject} exam in ${Math.ceil(daysDiff)} days`,
-                        'danger'
+                        'danger',
+                        10000
                     );
+                    hasUpcomingItems = true;
                 }
             });
             
             // Check classes for today
             const today = now.toLocaleDateString('en-US', { weekday: 'long' }).toLowerCase();
-            const currentTime = now.toTimeString().substring(0, 5);
             
             appData.classes.forEach(cls => {
                 if (cls.day === today) {
-                    const classTime = cls.time;
-                    // Simple time comparison - in real app, you'd want more sophisticated logic
-                    if (classTime === currentTime) {
+                    const classTime = new Date();
+                    const [hours, minutes] = cls.time.split(':');
+                    classTime.setHours(parseInt(hours), parseInt(minutes), 0, 0);
+                    
+                    const timeDiff = classTime - now;
+                    const minutesDiff = timeDiff / (1000 * 60);
+                    
+                    if (minutesDiff > 0 && minutesDiff <= 30) {
                         showNotification(
-                            'Class Starting!',
-                            `${cls.name} is starting now at ${cls.location}`,
-                            'info'
+                            'Class Starting Soon!',
+                            `${cls.name} starts in ${Math.ceil(minutesDiff)} minutes at ${cls.location}`,
+                            'info',
+                            6000
                         );
+                        hasUpcomingItems = true;
                     }
                 }
             });
+
+            // Check for low balance
+            const totalPocketMoney = appData.pocketMoney.reduce((sum, item) => sum + item.amount, 0);
+            const totalExpenses = appData.expenses.reduce((sum, item) => sum + item.amount, 0);
+            const currentBalance = totalPocketMoney - totalExpenses;
+            
+            if (currentBalance < 500 && currentBalance > 0) {
+                showNotification(
+                    'Low Balance Alert!',
+                    `Your current balance is Rs. ${currentBalance.toFixed(2)}. Consider adding more pocket money.`,
+                    'warning',
+                    7000
+                );
+            } else if (currentBalance <= 0) {
+                showNotification(
+                    'Negative Balance!',
+                    `Your balance is Rs. ${currentBalance.toFixed(2)}. You need to add pocket money.`,
+                    'danger',
+                    8000
+                );
+            }
+
+            // Check for overdue loans
+            appData.loans.forEach(loan => {
+                const returnDate = new Date(loan.returnDate);
+                if (returnDate < now && loan.type === 'given') {
+                    showNotification(
+                        'Overdue Loan!',
+                        `${loan.person} owes you Rs. ${loan.amount.toFixed(2)} and it's overdue!`,
+                        'danger',
+                        9000
+                    );
+                }
+            });
+
+            if (!hasUpcomingItems) {
+                // Show a motivational message if no urgent notifications
+                const messages = [
+                    "You're doing great! Keep managing your finances wisely.",
+                    "Stay organized and productive!",
+                    "Remember to track all your expenses for better budgeting.",
+                    "Your hostel life is under control with Sigma-Ruler!"
+                ];
+                const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+                
+                showNotification(
+                    'Stay Productive!',
+                    randomMessage,
+                    'success',
+                    5000
+                );
+            }
         }
 
         // Load data from localStorage
@@ -1487,13 +1278,12 @@
             } else {
                 initializeSampleData();
             }
-            updateProfileDisplay();
             updateAllDisplays();
             
-            // Check for notifications every minute
-            setInterval(checkNotifications, 60000);
-            // Initial check
-            setTimeout(checkNotifications, 2000);
+            // Check for notifications every 30 seconds
+            setInterval(checkNotifications, 30000);
+            // Initial check after 3 seconds
+            setTimeout(checkNotifications, 3000);
         }
 
         // Initialize with sample data
@@ -1532,98 +1322,6 @@
         function saveData() {
             localStorage.setItem('sigmaRulerData', JSON.stringify(appData));
         }
-
-        // Update profile display
-        function updateProfileDisplay() {
-            document.getElementById('profileName').textContent = appData.profile.name;
-            
-            // Update profile image
-            const profileIcon = document.getElementById('profileIcon');
-            const profileImageContainer = document.getElementById('profileImageContainer');
-            
-            if (appData.profile.image) {
-                profileIcon.innerHTML = `<img src="${appData.profile.image}" alt="Profile">`;
-                profileImageContainer.innerHTML = `<img src="${appData.profile.image}" alt="Profile">`;
-            } else {
-                profileIcon.innerHTML = '<div class="profile-image-placeholder"><i class="fas fa-user"></i></div>';
-                profileImageContainer.innerHTML = '<div class="profile-image-placeholder"><i class="fas fa-user"></i></div>';
-            }
-            
-            // Update balance
-            updateBalanceDisplay();
-            
-            // Update theme
-            document.body.className = `${appData.profile.theme}-theme`;
-            document.getElementById('themeToggle').innerHTML = appData.profile.theme === 'dark' ? 
-                '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
-                
-            // Update theme options
-            document.querySelectorAll('.theme-option').forEach(option => {
-                option.classList.remove('active');
-                if (option.getAttribute('data-theme') === appData.profile.theme) {
-                    option.classList.add('active');
-                }
-            });
-        }
-
-        // Update balance display
-        function updateBalanceDisplay() {
-            const totalPocketMoney = appData.pocketMoney.reduce((sum, item) => sum + item.amount, 0);
-            const totalExpenses = appData.expenses.reduce((sum, item) => sum + item.amount, 0);
-            const currentBalance = totalPocketMoney - totalExpenses;
-            
-            document.getElementById('profileBalance').textContent = `Rs. ${currentBalance.toFixed(2)}`;
-        }
-
-        // Profile management
-        document.getElementById('profileIcon').addEventListener('click', () => {
-            document.getElementById('profileModal').classList.add('active');
-            document.getElementById('userName').value = appData.profile.name;
-        });
-
-        document.getElementById('closeProfileModal').addEventListener('click', () => {
-            document.getElementById('profileModal').classList.remove('active');
-        });
-
-        document.getElementById('uploadImageBtn').addEventListener('click', () => {
-            document.getElementById('imageUpload').click();
-        });
-
-        document.getElementById('imageUpload').addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(event) {
-                    appData.profile.image = event.target.result;
-                    updateProfileDisplay();
-                };
-                reader.readAsDataURL(file);
-            }
-        });
-
-        document.querySelectorAll('.theme-option').forEach(option => {
-            option.addEventListener('click', function() {
-                appData.profile.theme = this.getAttribute('data-theme');
-                updateProfileDisplay();
-                saveData();
-            });
-        });
-
-        document.getElementById('profileForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            appData.profile.name = document.getElementById('userName').value;
-            updateProfileDisplay();
-            saveData();
-            document.getElementById('profileModal').classList.remove('active');
-            showNotification('Profile Updated', 'Your profile has been updated successfully', 'success');
-        });
-
-        // Theme toggle
-        document.getElementById('themeToggle').addEventListener('click', function() {
-            appData.profile.theme = appData.profile.theme === 'dark' ? 'light' : 'dark';
-            updateProfileDisplay();
-            saveData();
-        });
 
         // Navigation between modules
         document.querySelectorAll('.dashboard-card').forEach(card => {
@@ -2067,7 +1765,20 @@
             updateFinanceDisplays();
             updateFoodDisplay();
             updateStudyDisplays();
-            updateBalanceDisplay();
+        }
+
+        // Helper function to get item by ID and type
+        function getItemById(id, type) {
+            switch(type) {
+                case 'pocket': return appData.pocketMoney.find(item => item.id === id);
+                case 'expense': return appData.expenses.find(item => item.id === id);
+                case 'loan': return appData.loans.find(item => item.id === id);
+                case 'food': return appData.foodMenu.find(item => item.id === id);
+                case 'class': return appData.classes.find(item => item.id === id);
+                case 'assignment': return appData.assignments.find(item => item.id === id);
+                case 'exam': return appData.exams.find(item => item.id === id);
+                default: return null;
+            }
         }
 
         // Update finance displays with tables
@@ -2175,20 +1886,6 @@
                     deleteItem(id, type);
                 });
             });
-        }
-
-        // Helper function to get item by ID and type
-        function getItemById(id, type) {
-            switch(type) {
-                case 'pocket': return appData.pocketMoney.find(item => item.id === id);
-                case 'expense': return appData.expenses.find(item => item.id === id);
-                case 'loan': return appData.loans.find(item => item.id === id);
-                case 'food': return appData.foodMenu.find(item => item.id === id);
-                case 'class': return appData.classes.find(item => item.id === id);
-                case 'assignment': return appData.assignments.find(item => item.id === id);
-                case 'exam': return appData.exams.find(item => item.id === id);
-                default: return null;
-            }
         }
 
         // Update food display with table
